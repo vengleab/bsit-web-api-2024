@@ -13,6 +13,16 @@ webapp.get("/", (request, response) => {
   `);
 });
 
+webapp.get('/profile', (req, res) => {
+  const mockProfile = {
+    name: 'Jane Doe',
+    gender: 'Female',
+    image: 'https://www.digitalocean.com/api/static-content/v1/images?src=https%3A%2F%2Fcommunity-cdn-digitalocean-com.global.ssl.fastly.net%2FvkL74ySp2fFiArxbTvhp4QF2&width=1920', 
+  };
+
+  res.json(mockProfile);
+});
+
 webapp.post("/form-login", (request, response) => {
   console.log(request.body);
   response.send({ message: "Data received" + JSON.stringify(request.body) });
