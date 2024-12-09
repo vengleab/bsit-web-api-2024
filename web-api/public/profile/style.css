@@ -5,12 +5,12 @@ body {
   background-color: #f4f4f4;
 }
 
-.profile-container {
+/* .profile-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-}
+} */
 
 .loading {
   font-size: 18px;

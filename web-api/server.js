@@ -1,8 +1,9 @@
 const express = require("express");
-
+const profiles = require("./models/profiles.json");
 const webapp = express();
 const PORT = 8080;
 
+webapp.set("view engine", "ejs");
 webapp.use(express.json());
 webapp.use(express.urlencoded({ extended: true }));
 webapp.use("/assets", express.static("public"));
@@ -11,6 +12,10 @@ webapp.get("/", (request, response) => {
   response.send(`
     <h1 style="color: red">Web-API 2</h1> 
   `);
+});
+
+webapp.get("/mypage", (request, response) => {
+  response.render("index", { data: profiles });
 });
 
 webapp.get('/profile', (req, res) => {

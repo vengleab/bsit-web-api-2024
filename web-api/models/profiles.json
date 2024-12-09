@@ -1,0 +1,13 @@
+[{
+  "name": "Jane Doe",
+  "gender": "Female",
+  "image": "https://www.digitalocean.com/api/static-content/v1/images?src=https%3A%2F%2Fcommunity-cdn-digitalocean-com.global.ssl.fastly.net%2FvkL74ySp2fFiArxbTvhp4QF2&width=1920" 
+}, {
+  "name": "Jame",
+  "gender": "Male",
+  "image": "https://www.digitalocean.com/api/static-content/v1/images?src=https%3A%2F%2Fcommunity-cdn-digitalocean-com.global.ssl.fastly.net%2FvkL74ySp2fFiArxbTvhp4QF2&width=1920" 
+}, {
+  "name": "Jame",
+  "gender": "Male",
+  "image": "https://www.digitalocean.com/api/static-content/v1/images?src=https%3A%2F%2Fcommunity-cdn-digitalocean-com.global.ssl.fastly.net%2FvkL74ySp2fFiArxbTvhp4QF2&width=1920" 
+}]
