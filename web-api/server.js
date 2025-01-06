@@ -8,7 +8,10 @@ const notFound = require("./middleware/not-found-middleware");
 const loggerMiddleware = require("./middleware/logger-middleware");
 const level1Middleware = require("./middleware/level1-middleware");
 const level2Middleware = require("./middleware/level2-middleware");
+const requestLogMiddleware = require("./middleware/request-log-middleware");
 const PORT = 8080;
+
+webapp.use(requestLogMiddleware);
 
 webapp.set("view engine", "ejs");
 webapp.use(express.json());
