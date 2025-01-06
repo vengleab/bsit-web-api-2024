@@ -9,18 +9,23 @@ const loggerMiddleware = require("./middleware/logger-middleware");
 const level1Middleware = require("./middleware/level1-middleware");
 const level2Middleware = require("./middleware/level2-middleware");
 const requestLogMiddleware = require("./middleware/request-log-middleware");
+const morgan = require("morgan");
 const PORT = 8080;
+const logger = require("./logger/winston-log");
+
+// morgan.token('body', (req) => JSON.stringify(req.body));
 
 webapp.use(requestLogMiddleware);
-
+// webapp.use(morgan(":remote-addr :status :res[content-length] :method :url :response-time ms"));
 webapp.set("view engine", "ejs");
 webapp.use(express.json());
 webapp.use(express.urlencoded({ extended: true }));
 webapp.use("/assets", express.static("public"));
 webapp.use("/api/profiles", profileRouter);
-webapp.use(loggerMiddleware)
-webapp.use(level1Middleware)
-webapp.use(level2Middleware)
+
+// webapp.use(loggerMiddleware)
+// webapp.use(level1Middleware)
+// webapp.use(level2Middleware)
 webapp.get("/", (request, response) => {
   response.send(`
     <h1 style="color: red">Web-API 2</h1> 
