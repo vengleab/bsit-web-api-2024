@@ -1,6 +1,9 @@
 const express = require("express");
 const profiles = require("./models/profiles.json");
 const webapp = express();
+
+const userController = require("./controllers/user");
+
 const errorMiddleware = require("./middleware/error-middleware");
 const profileRouter = require("./controllers/profile");
 const PaymentDownException = require("./exception/payment-down-exception");
@@ -22,6 +25,7 @@ webapp.use(express.json());
 webapp.use(express.urlencoded({ extended: true }));
 webapp.use("/assets", express.static("public"));
 webapp.use("/api/profiles", profileRouter);
+webapp.use("/users", userController)
 
 // webapp.use(loggerMiddleware)
 // webapp.use(level1Middleware)
