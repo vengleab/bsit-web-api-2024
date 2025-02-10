@@ -3,6 +3,9 @@ const PrismaClient = require("@prisma/client").PrismaClient;
 const primsa = new PrismaClient();
 
 userController.get("/", async (req, res)=> {
+  if (req.userRole !== 'admin'){
+    res.status(403).send("Unauthorized")
+  }
   const users = await primsa.user.findMany({ include: { articles: true} });
   res.send(users);
 })

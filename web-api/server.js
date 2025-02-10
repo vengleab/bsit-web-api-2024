@@ -17,6 +17,7 @@ webapp.use(session({
 }));
 // ========== stateful configration ================
 
+const jwtUtls = require("./utils/jwt");
 
 const userController = require("./controllers/user");
 
@@ -77,7 +78,35 @@ const authMiddleware = (request, response, next) => {
 
 // ========== stateful api ================
 
-webapp.use("/users", [authMiddleware], userController)
+// ========== state api ================
+webapp.get("/stateless-login", (request, response) => {
+  const { email, password } = request.body;
+  if (email === "admin" && password === "admin") {
+    return response.send({ token: jwtUtls.generateToken(email, "admin")});
+  } else {
+    response.status(401).send("Login failed");
+  }
+});
+
+const statelessAuthMiddleware = (request, response, next) => {
+  try {
+    const authHeader = request.headers.authorization || " ";
+    const [schema, token] = authHeader.split(" ");
+    if (schema === "Bearer") {
+      const { role } = jwtUtls.verify(token);
+      request.userRole = role;
+      return next();
+    } else {
+      return response.status(401).send("Not login");
+    }
+  } catch (error) {
+    console.log({ error});
+    
+  }
+}
+// ========== state api ================
+
+webapp.use("/users", [statelessAuthMiddleware], userController)
 
 // webapp.use(loggerMiddleware)
 // webapp.use(level1Middleware)
