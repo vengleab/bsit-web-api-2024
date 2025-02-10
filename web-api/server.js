@@ -1,6 +1,11 @@
 const express = require("express");
 const profiles = require("./models/profiles.json");
 const webapp = express();
+// ========== cors configration ================
+const cors = require("cors");
+webapp.use(cors({ origin: ["http://localhost:3000", "http://localhost:3001"] }));
+// ========== cors configration ================
+
 
 const userController = require("./controllers/user");
 
