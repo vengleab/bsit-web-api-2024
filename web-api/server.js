@@ -7,6 +7,17 @@ webapp.use(cors({ origin: ["http://localhost:3000", "http://localhost:3001"] }))
 // ========== cors configration ================
 
 
+// ========== stateful configration ================
+const session = require("express-session");
+webapp.use(session({
+  secret: "dsjhfdjgdfjhgfdjgkjdfghlfdghfgdr",
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 1000 * 60 * 60 * 24 } // 1 day
+}));
+// ========== stateful configration ================
+
+
 const userController = require("./controllers/user");
 
 const errorMiddleware = require("./middleware/error-middleware");
@@ -30,7 +41,43 @@ webapp.use(express.json());
 webapp.use(express.urlencoded({ extended: true }));
 webapp.use("/assets", express.static("public"));
 webapp.use("/api/profiles", profileRouter);
-webapp.use("/users", userController)
+
+// ========== stateful api================
+// ========== stateful api - Login ================
+webapp.get("/login", (request, response) => {
+  const { email, password } = request.query;
+  if (email === "admin" && password === "admin") {
+    request.session.user = { email, password };
+    return response.send("Login successful");
+  } else {
+    response.status(401).send("Login failed");
+  }
+});
+
+// ========== stateful api - Logout ================
+webapp.get("/logout", (request, response) => {
+  request.session.destroy();
+  return response.send("Logout successful");
+});
+
+// ========== stateful api - Authentication ================
+const authMiddleware = (request, response, next) => {
+  try {
+    const { email, password } = request.session.user || {};
+    if (email === "admin" && password === "admin") {
+      return next();
+    } else {
+      return response.status(401).send("Not login");
+    }
+  } catch (error) {
+    logger.error("Login failed", error);
+    return response.status(400).send("Error");
+  }
+}
+
+// ========== stateful api ================
+
+webapp.use("/users", [authMiddleware], userController)
 
 // webapp.use(loggerMiddleware)
 // webapp.use(level1Middleware)
